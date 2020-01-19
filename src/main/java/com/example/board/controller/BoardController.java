@@ -7,18 +7,50 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import java.util.List;
+import java.io.File;
+import java.util.*;
 
 @Controller
 @AllArgsConstructor
 public class BoardController {
     private BoardService boardService;
 
-    @GetMapping("/test")
+    @RequestMapping("/test")
     public String test(){
-        return "Hello from develop1 & change from remote";
+        return "/project/home.html";
     }
+
+    @RequestMapping(value="/upload", method=RequestMethod.POST)
+    @ResponseBody
+    public String fileUpload(MultipartHttpServletRequest request){
+        String s = System.getProperty("user.dir");
+
+        Iterator<String> itr = request.getFileNames();
+
+        String filePath = s + "\\images";
+        File dir = new File(filePath);
+        if(!dir.exists()){
+            dir.mkdirs();
+        }
+
+        while(itr.hasNext()){
+            MultipartFile mpf = request.getFile(itr.next());
+            String originalFilename = mpf.getOriginalFilename();
+            System.out.println(originalFilename);
+            try{
+                mpf.transferTo(new File(filePath+"\\"+originalFilename));
+            }catch(Exception e){
+                System.out.println(e);
+                e.printStackTrace();
+            }
+        }
+
+        return "";
+    }
+
 
     @GetMapping("/")
     public String list(Model model){
