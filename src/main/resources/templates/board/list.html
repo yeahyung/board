@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" th:href="@{/css/board.css}">
+</head>
+<body>
+
+<!-- HEADER -->
+<!-- th:insert, JSP의 include같은 개념, 다른 페이지를 현재 페이지에 삽입하는 역할 -->
+<div th:insert="common/header.html" id=""header></div>
+
+<!-- th:href @{/post}는 localhost:8080/post 호출 -->
+<a th:href="@{/post}">글쓰기</a>
+
+<table>
+    <thead>
+        <tr>
+            <th class="one wide">번호</th>
+            <th class="ten wide">글제목</th>
+            <th class="two wide">작성자</th>
+            <th class="three wide">작성일</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <!-- thymeleaf 에서의 반복문 controller 가 넘겨주는 변수는 ${}로 사용 가능-->
+        <tr th:each="board : ${boardList}">
+            <td>
+                <span th:text="${board.id}"></span>
+            </td>
+            <td>
+                <a th:href="@{'/post/' + ${board.id}}">
+                    <span th:text="${board.title}"></span>
+                </a>
+            </td>
+            <td>
+                <span th:text="${board.writer}"></span>
+            </td>
+            <td>
+                <span th:text="${#temporals.format(board.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- FOOTER -->
+<div th:insert="common/footer.html" id="footer"></div>
+
+</body>
+</html>
