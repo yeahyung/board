@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 @NoArgsConstructor
+// Dto => Data Transfer Object, View layer와 통신
 public class BoardDto {
     private Long id;
     private String writer;
@@ -17,6 +18,7 @@ public class BoardDto {
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
 
+    // Dto를 entity로 변경
     public BoardEntity toEntity(){
         BoardEntity build = BoardEntity.builder()
                 .id(id)

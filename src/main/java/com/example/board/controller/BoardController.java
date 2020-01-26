@@ -1,5 +1,6 @@
 package com.example.board.controller;
 
+import com.example.board.domain.entity.BoardEntity;
 import com.example.board.dto.BoardDto;
 import com.example.board.service.BoardService;
 import jdk.nashorn.internal.objects.annotations.Getter;
@@ -55,7 +56,7 @@ public class BoardController {
     @GetMapping("/")
     public String list(Model model){
         List<BoardDto> boardList = boardService.getBoardList();
-
+        //List<BoardEntity> boardList = boardService.getBoardList();
         model.addAttribute("boardList", boardList);
         return "/board/list.html";
     }
@@ -92,7 +93,7 @@ public class BoardController {
     // @PostMapping("/post/edditted/{no}")
     public String update(BoardDto boardDto){
         boardService.savePost(boardDto);
-        System.out.println("edit");
+
         return "redirect:/";
     }
 

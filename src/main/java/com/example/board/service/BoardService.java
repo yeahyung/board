@@ -19,10 +19,12 @@ public class BoardService {
 
     @Transactional
     public Long savePost(BoardDto boardDto){
+        System.out.println(boardDto.getContent());
         return boardRepository.save(boardDto.toEntity()).getId();
     }
 
     @Transactional
+    // BoardEntity로 return해도 문제가 없지만, client와 controller간에는 Dto로 주고 받음
     public List<BoardDto> getBoardList(){
         List<BoardEntity> boardEntities = boardRepository.findAll();
         List<BoardDto> boardDtoList = new ArrayList<>();

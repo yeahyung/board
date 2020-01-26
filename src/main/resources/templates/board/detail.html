@@ -21,6 +21,13 @@
         <input type="hidden" name="_method" value="delete"/>
         <button id="delete-btn">삭제</button>
     </form>
+    <!-- /comment/ + ${boardDto.id} 해줘야 할듯 -->
+    <form action="/comment" method="post">
+        댓글 작성자 : <input type="text" name="writer"> <br>
+        댓글 암호 : <input type="password" name="password"> <br>
+        <textarea name="content"></textarea> <br>
+        <input type="submit" value="등록">
+    </form>
 </div>
 
 <!-- 변수 셋팅 -->
