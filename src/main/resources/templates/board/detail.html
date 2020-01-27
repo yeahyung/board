@@ -11,6 +11,8 @@
 
 <p th:text="${boardDto.content}"></p>
 
+<!-- 댓글 목록 보여주기 -->
+
 <!-- 수정/삭제 -->
 <div>
     <a th:href="@{'/post/edit/' + ${boardDto.id}}">
@@ -28,6 +30,7 @@
         <textarea name="content"></textarea> <br>
         <input type="submit" value="등록">
     </form>
+
 </div>
 
 <!-- 변수 셋팅 -->
