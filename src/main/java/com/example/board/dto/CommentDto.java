@@ -1,10 +1,7 @@
 package com.example.board.dto;
 
-import com.example.board.domain.entity.BoardEntity;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import com.example.board.domain.entity.CommentEntity;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -18,20 +15,30 @@ public class CommentDto {
     // id(PK), postNo(FK), writer, (password), comment, createdDate, modifiedDate
 
     private Long id;
+    private Long postNo;
     private String writer;
-    private String title;
-    private String content;
+    private String comment;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
 
     // Dto를 entity로 변경
-    public BoardEntity toEntity(){
-        BoardEntity build = BoardEntity.builder()
+    public CommentEntity toEntity(){
+        CommentEntity build = CommentEntity.builder()
                 .id(id)
+                .postNo(postNo)
                 .writer(writer)
-                .title(title)
-                .content(content)
+                .comment(comment)
                 .build();
         return build;
+    }
+
+    @Builder
+    public CommentDto(Long id, Long postNo, String writer, String comment, LocalDateTime createdDate, LocalDateTime modifiedDate){
+        this.id = id;
+        this.postNo = postNo;
+        this.writer = writer;
+        this.comment = comment;
+        this.createdDate = createdDate;
+        this.modifiedDate = modifiedDate;
     }
 }
