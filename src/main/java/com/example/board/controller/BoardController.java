@@ -88,6 +88,8 @@ public class BoardController {
 
         model.addAttribute("boardDto", boardDto);
         model.addAttribute("commentList", commentList);
+        // detail.html에서 commentList들 보여주자.
+
         return "/board/detail.html";
     }
 
