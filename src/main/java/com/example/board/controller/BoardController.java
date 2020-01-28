@@ -2,7 +2,9 @@ package com.example.board.controller;
 
 import com.example.board.domain.entity.BoardEntity;
 import com.example.board.dto.BoardDto;
+import com.example.board.dto.CommentDto;
 import com.example.board.service.BoardService;
+import com.example.board.service.CommentService;
 import jdk.nashorn.internal.objects.annotations.Getter;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.xml.stream.events.Comment;
 import java.io.File;
 import java.util.*;
 
@@ -18,6 +21,7 @@ import java.util.*;
 @AllArgsConstructor
 public class BoardController {
     private BoardService boardService;
+    private CommentService commentService;
 
     @RequestMapping("/test")
     public String test(){
@@ -77,7 +81,15 @@ public class BoardController {
     public String detail(@PathVariable("no") Long no, Model model){
         BoardDto boardDto = boardService.getPost(no);
 
+        List<CommentDto> commentList = commentService.getCommentList(no);
+        for(CommentDto commentDto : commentList){
+            System.out.println(commentDto.getComment());
+        }
+
         model.addAttribute("boardDto", boardDto);
+        model.addAttribute("commentList", commentList);
+        // detail.html에서 commentList들 보여주자.
+
         return "/board/detail.html";
     }
 
@@ -104,4 +116,13 @@ public class BoardController {
         return "redirect:/";
     }
 
+    @RequestMapping(value = "/comment/{no}", method= {RequestMethod.GET, RequestMethod.POST})
+    public String writeComment(@PathVariable Long no, CommentDto commentDto){
+        //System.out.println("글 번호: " + no);
+        //System.out.println(commentDto.getComment());
+        commentDto.setPostNo(no);
+        commentService.saveComment(commentDto);
+
+        return "redirect:/";
+    }
 }
