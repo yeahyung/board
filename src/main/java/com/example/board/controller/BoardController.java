@@ -80,15 +80,10 @@ public class BoardController {
     @GetMapping("/post/{no}")
     public String detail(@PathVariable("no") Long no, Model model){
         BoardDto boardDto = boardService.getPost(no);
-
         List<CommentDto> commentList = commentService.getCommentList(no);
-        for(CommentDto commentDto : commentList){
-            System.out.println(commentDto.getComment());
-        }
 
         model.addAttribute("boardDto", boardDto);
         model.addAttribute("commentList", commentList);
-        // detail.html에서 commentList들 보여주자.
 
         return "/board/detail.html";
     }
@@ -110,7 +105,7 @@ public class BoardController {
     }
 
     @PostMapping(value = "/post/delete/{no}")
-    public String delete(@PathVariable("no") Long no){
+    public String deletePost(@PathVariable("no") Long no){
         boardService.deletePost(no);
 
         return "redirect:/";
@@ -122,6 +117,13 @@ public class BoardController {
         //System.out.println(commentDto.getComment());
         commentDto.setPostNo(no);
         commentService.saveComment(commentDto);
+
+        return "redirect:/";
+    }
+
+    @PostMapping(value = "/comment/delete/{no}")
+    public String deleteComment(@PathVariable("no") Long no){
+        commentService.deleteComment(no);
 
         return "redirect:/";
     }

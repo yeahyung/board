@@ -43,5 +43,6 @@ public class CommentService {
     @Transactional
     public void deleteComment(Long id){
         // 댓글 삭제
+        commentRepository.deleteById(id);
     }
 }
