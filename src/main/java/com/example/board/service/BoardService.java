@@ -20,7 +20,13 @@ public class BoardService {
     @Transactional
     public Long savePost(BoardDto boardDto){
         System.out.println(boardDto.getContent());
-        return boardRepository.save(boardDto.toEntity()).getId();
+        // repository.save를 하면 해당 repository가 extend한 걸로 return해주는 듯, 여기선 BoardEntity를 extends했기 때문에 entity로 return
+        BoardEntity temp = boardRepository.save(boardDto.toEntity());
+        System.out.println(temp);
+        System.out.println(temp.getContent());
+        System.out.println(temp.getTitle());
+        return (long)1;
+        //return boardRepository.save(boardDto.toEntity()).getId();
     }
 
     @Transactional

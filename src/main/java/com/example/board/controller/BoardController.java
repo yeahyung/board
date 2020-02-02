@@ -74,7 +74,6 @@ public class BoardController {
     @PostMapping("/post")
     public String write(BoardDto boardDto){
         boardService.savePost(boardDto);
-
         return "redirect:/";
     }
 
