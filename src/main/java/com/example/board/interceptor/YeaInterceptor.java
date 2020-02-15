@@ -13,7 +13,7 @@ public class YeaInterceptor  implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception{
         boolean flag=false;
-        System.out.println("controller로 전달되기 전 Interceptor가 실행됨, 여기서 isLogin 등 구현할 수 있음");
+        System.out.println("controller로 전달되기 전 Interceptor가 실행됨, 여기서 cookie 등을 활용할 수 있음");
         flag = true;
         return flag;
     }

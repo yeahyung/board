@@ -1,11 +1,11 @@
 package com.example.board.controller;
 
-import com.example.board.domain.entity.BoardEntity;
 import com.example.board.dto.BoardDto;
 import com.example.board.dto.CommentDto;
+import com.example.board.service.AutoService;
 import com.example.board.service.BoardService;
 import com.example.board.service.CommentService;
-import jdk.nashorn.internal.objects.annotations.Getter;
+import com.example.board.vo.request.ImgAugRequestVo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,50 +13,15 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import javax.xml.stream.events.Comment;
 import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
-//왜 커밋이 안올라
 @Controller
 @AllArgsConstructor
 public class BoardController {
     private BoardService boardService;
     private CommentService commentService;
-
-    @RequestMapping("/test")
-    public String test(){
-        return "/project/home.html";
-    }
-
-    @RequestMapping(value="/upload", method=RequestMethod.POST)
-    @ResponseBody
-    public String fileUpload(MultipartHttpServletRequest request){
-        String s = System.getProperty("user.dir");
-
-        Iterator<String> itr = request.getFileNames();
-
-        String filePath = s + "\\images";
-        File dir = new File(filePath);
-        if(!dir.exists()){
-            dir.mkdirs();
-        }
-
-        while(itr.hasNext()){
-            MultipartFile mpf = request.getFile(itr.next());
-            String originalFilename = mpf.getOriginalFilename();
-            System.out.println(originalFilename);
-            try{
-                mpf.transferTo(new File(filePath+"\\"+originalFilename));
-            }catch(Exception e){
-                System.out.println(e);
-                e.printStackTrace();
-            }
-        }
-
-        return "";
-    }
-
 
     @GetMapping("/")
     public String list(Model model){

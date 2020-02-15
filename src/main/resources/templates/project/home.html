@@ -34,6 +34,33 @@
                 }
             });
         });
+
+        $("#aug").click(function (event){
+            event.preventDefault();
+            var formData = new FormData();
+            var fileInput = document.getElementById("files");
+            var files = fileInput.files;
+            for(var i=0;i<files.length;i++){
+                formData.append('file-'+i, files[i]);
+            }
+            $.ajax({
+                type:"POST",
+                enctype:'multipart/form-data',
+                url:'/imgAug',
+                data:formData,
+                processData:false,
+                contentType:false,
+                cache:false,
+                timeout:600000,
+                success:function(data){
+                    console.log(data);
+                },
+                error:function(e){
+                    console.log("error",e);
+                }
+            });
+        });
+
     });
 </script>
 <body>
@@ -41,6 +68,7 @@
         <form method="post" name="image" enctype="multipart/form-data">
             <input type="file" id="files" name="files" multiple>
             <button type="submit" id="upload">서버에 업로드</button>
+            <button type="submit" id="aug">Aug 요청</button>
         </form>
     </div>
 </body>
