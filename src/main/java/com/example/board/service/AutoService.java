@@ -1,5 +1,8 @@
 package com.example.board.service;
 
+import com.example.board.constant.HistoryCode;
+import com.example.board.util.UserUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -7,10 +10,14 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 @Service
 public class AutoService {
+
+    @Autowired
+    AutoHistoryService autoHistoryService;
 
     // Java에서 cmd 명령어 실행
     public static String execCommand(String[] cmd){
@@ -81,5 +88,36 @@ public class AutoService {
         }
 
         return "empty";
+    }
+
+    // 전달되는 file list에 대해 img augmentation 요청
+    public String imgAug(MultipartHttpServletRequest request){
+        String res = "OK";
+        int fileCount = 0;
+        ArrayList<MultipartFile> multipartFileList = new ArrayList<>();
+        Iterator<String> itr = request.getFileNames(); // request.getRequest().getFileNames();
+
+        while (itr.hasNext()) {
+            MultipartFile mpf = request.getFile(itr.next()); // request.getRequest().getFile(itr.next());
+            String originalFilename = mpf.getOriginalFilename();
+            int pos = originalFilename.lastIndexOf(".");
+            if("jpg".equals(originalFilename.substring(pos+1)) || "jpeg".equals(originalFilename.substring(pos+1))) {
+                fileCount++;
+                multipartFileList.add(mpf);
+            }
+        }
+        if(fileCount!=0) {
+            System.out.println("Img request history 저장");
+            autoHistoryService.insertHistory(HistoryCode.IMAGE_AUGMENTATION_REQUEST, UserUtils.getUserIp(), fileCount);
+        }
+        else{
+            System.out.println("jpg 형태의 파일을 선택해주세요");
+            res = "ERROR";
+        }
+
+        // multipartFileList에 대해서 imgAug 실행
+
+
+        return res;
     }
 }
