@@ -17,7 +17,6 @@ import javax.xml.stream.events.Comment;
 import java.io.File;
 import java.util.*;
 
-//왜 커밋이 안올라
 @Controller
 @AllArgsConstructor
 public class BoardController {
