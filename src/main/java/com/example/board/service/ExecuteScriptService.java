@@ -30,7 +30,7 @@ public class ExecuteScriptService {
         Session session = null;
         String privateKeyPath = "/home/nes/.ssh/id_rsa";
 
-        String user="nes";
+        String user="root";
         int port = 22;
         String password = "rornfl123!@#";
         try {
