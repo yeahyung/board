@@ -35,7 +35,7 @@ public class ExecuteScriptService {
         String password = "rornfl123!@#";
         try {
             jsch.addIdentity(privateKeyPath);
-            session = jsch.getSession(user, host, port);
+            session = jsch.getSession(user, host);
             //session.setPassword(password);
             session.setConfig("PreferredAuthentications", "publickey,keyboard-interactive,password");
             Properties config = new Properties();
