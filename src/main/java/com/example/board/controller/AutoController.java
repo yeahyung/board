@@ -45,14 +45,7 @@ public class AutoController {
     // image augmentation 요청
     @RequestMapping(value = "/imgAug", method = RequestMethod.POST)
     @ResponseBody
-    public String imageAugmentation(MultipartHttpServletRequest request) { // 추후에 ImgAugRequestVo request로 수정해야하는데 FE에서 어떻게 전달해야하는지 모르겠
-        Iterator<String> itr = request.getFileNames(); // request.getRequest().getFileNames();
-        while (itr.hasNext()) {
-            MultipartFile mpf = request.getFile(itr.next()); // request.getRequest().getFile(itr.next());
-            String originalFilename = mpf.getOriginalFilename();
-            System.out.println(originalFilename);
-        }
-        return null;
+    public String imageAugmentation(MultipartHttpServletRequest request) { // 추후에 @Requestbody?? ImgAugRequestVo request로 수정해야하는데 FE에서 어떻게 전달해야하는지 모르겠네
+        return autoService.imgAug(request);
     }
-
 }
