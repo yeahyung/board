@@ -47,7 +47,7 @@ public class ExecuteScriptService {
         try {
             session.connect();
             Channel channel = session.openChannel("exec");
-            ((ChannelExec)channel).setCommand("echo \"asdasdasd\"");
+            ((ChannelExec)channel).setCommand("touch /root/zz.txt");
             ((ChannelExec)channel).setPty(false);
             channel.connect();
             BufferedReader stdInput = new BufferedReader(new InputStreamReader(channel.getInputStream()));
