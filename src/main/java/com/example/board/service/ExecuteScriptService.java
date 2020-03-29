@@ -30,13 +30,11 @@ public class ExecuteScriptService {
         Session session = null;
         String privateKeyPath = "/home/nes/.ssh/id_rsa";
 
-        String user="root";
+        String user="nes";
         int port = 22;
-        String password = "rornfl123!@#";
-
         try {
             jsch.addIdentity(privateKeyPath);
-            session = jsch.getSession(user, host, port);
+            session = jsch.getSession(user, host);
             //session.setPassword(password);
             session.setConfig("PreferredAuthentications", "publickey,keyboard-interactive,password");
             Properties config = new Properties();
