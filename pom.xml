@@ -61,9 +61,11 @@
             <version>0.1.55</version>
         </dependency>
 
+        <!-- DB 서버와 버전 맞추자 -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.46</version>
         </dependency>
 
 
