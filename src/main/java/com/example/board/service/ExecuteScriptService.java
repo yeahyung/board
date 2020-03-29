@@ -47,6 +47,7 @@ public class ExecuteScriptService {
 
         try {
             session.connect();
+            log.info("session connected");
             Channel channel = session.openChannel("exec");
             ((ChannelExec)channel).setCommand("touch /root/zz.txt");
             ((ChannelExec)channel).setPty(false);
