@@ -35,10 +35,10 @@ public class ExecuteScriptService {
         String password = "rornfl123!@#";
 
         try {
-            //jsch.addIdentity(privateKeyPath);
+            jsch.addIdentity(privateKeyPath);
             session = jsch.getSession(user, host, port);
-            session.setPassword(password);
-            // session.setConfig("PreferredAuthentications", "publickey,keyboard-interactive,password");
+            //session.setPassword(password);
+            session.setConfig("PreferredAuthentications", "publickey,keyboard-interactive,password");
             Properties config = new Properties();
             config.put("StrictHostKeyChecking", "no");
             session.setConfig(config);
@@ -49,7 +49,7 @@ public class ExecuteScriptService {
         try {
             session.connect();
             Channel channel = session.openChannel("exec");
-            ((ChannelExec)channel).setCommand("touch /root/jschTest.txt");
+            ((ChannelExec)channel).setCommand("echo \"asdasdasd\"");
             ((ChannelExec)channel).setPty(false);
             channel.connect();
             BufferedReader stdInput = new BufferedReader(new InputStreamReader(channel.getInputStream()));
