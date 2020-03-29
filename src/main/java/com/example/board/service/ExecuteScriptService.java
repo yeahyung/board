@@ -34,10 +34,10 @@ public class ExecuteScriptService {
         int port = 22;
         String password = "rornfl123!@#";
         try {
-            jsch.addIdentity(privateKeyPath);
-            session = jsch.getSession(user, host);
-            //session.setPassword(password);
-            session.setConfig("PreferredAuthentications", "publickey,keyboard-interactive,password");
+            //jsch.addIdentity(privateKeyPath);
+            session = jsch.getSession(user, host, port);
+            session.setPassword(password);
+            //session.setConfig("PreferredAuthentications", "publickey,keyboard-interactive,password");
             Properties config = new Properties();
             config.put("StrictHostKeyChecking", "no");
             session.setConfig(config);
