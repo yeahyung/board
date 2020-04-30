@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h2 th:text="${boardDto.title}"></h2>
+<p th:inline="text">작성일 : [[${#temporals.format(boardDto.createdDate, 'yyyy-MM-dd HH:mm')}]]</p>
+
+<p th:text="${boardDto.content}"></p>
+
+<!-- 수정/삭제 -->
+<div>
+    <a th:href="@{'/post/edit/' + ${boardDto.id}}">
+        <button>글 수정</button>
+    </a>
+
+    <form id="delete-form" th:action="@{'/post/delete/' + ${boardDto.id}}" method="post">
+        <input type="hidden" name="_method" value="delete"/>
+        <button id="delete-btn">글 삭제</button>
+    </form>
+    <br>
+    <form th:action="@{'/comment/' + ${boardDto.id}}" method="post">
+        댓글 작성자 : <input type="text" name="writer"> <br>
+        <!-- 댓글 암호 : <input type="password" name="password"> <br> -->
+        <textarea name="comment"></textarea> <br>
+        <input type="submit" value="댓글 등록">
+    </form>
+
+    <br>
+
+    <!-- 댓글 목록 보여주기 -->
+    <tbody>
+    <!-- thymeleaf 에서의 반복문 controller 가 넘겨주는 변수는 ${}로 사용 가능-->
+    <tr th:each="comment : ${commentList}">
+        <td>
+            <span th:text="${comment.id}"></span>
+        </td>
+        <td>
+            <span th:text="${comment.comment}"></span>
+        </td>
+        <td>
+            <span th:text="${comment.writer}"></span>
+        </td>
+        <td>
+            <span th:text="${#temporals.format(comment.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
+        </td>
+        <form id="delete-form1" th:action="@{'/comment/delete/' + ${comment.id}}" method="post">
+            <input type="hidden" name="_method" value="delete"/>
+            <button id="delete-btn1">댓글 삭제</button>
+        </form>
+        <br>
+    </tr>
+    </tbody>
+
+</div>
+
+<!-- 변수 셋팅 -->
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var boardDto = /*[[${boardDto}]]*/ "";
+    /*]]>*/
+</script>
+<script th:inline="javascript" th:src="@{/js/board.js}"></script>
+</body>
+</html>
