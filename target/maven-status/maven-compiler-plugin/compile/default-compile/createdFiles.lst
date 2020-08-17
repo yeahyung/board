@@ -25,5 +25,4 @@ com/example/board/config/BoardConfig.class
 com/example/board/constant/HistoryCode.class
 com/example/board/domain/entity/TimeEntity.class
 com/example/board/entity/ImgAugHistory.class
-com/example/board/controller/BoardController.class
 com/example/board/service/CommentService.class

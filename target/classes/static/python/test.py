@@ -16,7 +16,7 @@ def zip(src_path, dest_file):
                 relpath = os.path.relpath(fullpath, rootpath)
                 zf.write(fullpath, relpath, zipfile.ZIP_DEFLATED)
         zf.close()
-    #shutil.rmtree(src_path)
+    shutil.rmtree(src_path)
 
 ia.seed(1)
 seq = iaa.Sequential([
@@ -206,7 +206,7 @@ file_list = os.listdir(img_paths)
 for item in file_list:
     print(item)
     extention = item.split(".")[-1]
-    if extention == "jpeg":
+    if extention == "jpeg" or extention == "jpg":
         img = cv2.imread(img_paths+"/"+item)
         images = np.array([ img for _ in range(4)], dtype=np.uint8)
         images_aug = seq.augment_images(images)
@@ -214,6 +214,6 @@ for item in file_list:
         for tt,img_path in enumerate(images_aug):
             #print(str(tt)+item, img_path.shape)
             #print("/Users/yeahyungbin/Downloads/aug/"+str(tt)+".jpg")
-            cv2.imwrite("/Users/yeahyungbin/Downloads/aug/"+str(tt)+".jpg", img_path)
+            cv2.imwrite("/Users/yeahyungbin/Downloads/aug/"+str(tt) + item, img_path)
 
 zip(aug_paths, base_paths+"/myZipFile.zip")

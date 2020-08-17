@@ -2,6 +2,7 @@ package com.example.board.service;
 
 import com.example.board.constant.HistoryCode;
 import com.example.board.controller.AutoController;
+import com.example.board.dto.TerminalRequestDto;
 import com.example.board.util.ServletRequestUtil;
 import com.example.board.util.UserUtils;
 import org.apache.tomcat.util.http.fileupload.ByteArrayOutputStream;
@@ -28,50 +29,24 @@ public class AutoService {
     @Autowired
     AutoHistoryService autoHistoryService;
 
-    // Java에서 cmd 명령어 실행
-    public static String execCommand(String cmd){
-        Process process;
-        BufferedReader bufferedReader;
-        StringBuffer readBuffer;
-
-        try{
-            process = Runtime.getRuntime().exec(cmd);
-            bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            String line = null;
-            readBuffer = new StringBuffer();
-
-            while((line = bufferedReader.readLine()) != null){
-                readBuffer.append(line);
-                readBuffer.append("\n");
-            }
-            return readBuffer.toString();
-        }catch(Exception e){
-            e.printStackTrace();
-            System.exit(1);
-        }
-        return null;
-    }
-
     // 웹페이지에서 upload한 이미지 image directory에 다운
+    // /Users/user/download/imgUpload/filename 으로 저
     public String fileUpload(MultipartHttpServletRequest request){
-        String s = System.getProperty("user.dir");
-
         Iterator<String> itr = request.getFileNames();
 
-        String filePath = s + "/images";
-        File dir = new File(filePath);
-        if(!dir.exists()){
-            dir.mkdirs();
-        }
+        String downloadPath = "/Users/user/Downloads/imgUpload/";
+        File downloadDir = new File(downloadPath);
+        if(!downloadDir.exists())
+            downloadDir.mkdirs();
 
         while(itr.hasNext()){
             MultipartFile mpf = request.getFile(itr.next());
             String originalFilename = mpf.getOriginalFilename();
-            System.out.println(originalFilename);
+            LOG.warn(originalFilename);
             try{
-                mpf.transferTo(new File("/Users/yeahyungbin/Downloads/imgUpload/"+originalFilename));
+                mpf.transferTo(new File(downloadPath + originalFilename));
             }catch(Exception e){
-                System.out.println(e);
+                LOG.warn(String.valueOf(e));
                 e.printStackTrace();
             }
         }
@@ -80,15 +55,20 @@ public class AutoService {
     }
 
     // 폴더에 있는 이미지 목록 제공
+    // /Users/user/ncp/board/images 폴더 내에 있는 파일들 목록 반환
     public String getFileList(){
         String s = System.getProperty("user.dir");
         String filePath = s + "/images";
         String result = "";
+
         File dir = new File(filePath);
+
         if(!dir.exists()){
             return "empty";
         }
+
         File[] fileList = dir.listFiles();
+
         if(fileList.length > 0){
             for(File temp : fileList){
                 result += temp.getName() + "\n";
@@ -138,6 +118,30 @@ public class AutoService {
         String result = execCommand(cmd);
 
         return fileDownload(response);
+    }
+
+    // Java에서 cmd 명령어 실행
+    public static String execCommand(String cmd){
+        Process process;
+        BufferedReader bufferedReader;
+        StringBuffer readBuffer;
+
+        try{
+            process = Runtime.getRuntime().exec(cmd);
+            bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String line = null;
+            readBuffer = new StringBuffer();
+
+            while((line = bufferedReader.readLine()) != null){
+                readBuffer.append(line);
+                readBuffer.append("\n");
+            }
+            return readBuffer.toString();
+        }catch(Exception e){
+            e.printStackTrace();
+            System.exit(1);
+        }
+        return null;
     }
 
     public byte[] fileDownload(HttpServletResponse response) throws IOException{
