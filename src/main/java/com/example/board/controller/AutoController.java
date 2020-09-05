@@ -53,8 +53,8 @@ public class AutoController {
     @PostMapping("/terminal")
     @ResponseBody
     public String terminalTest(@RequestBody TerminalRequestDto requestDto) { // 추후에는 request에 명령어를 담아서 오자.
-        String result = autoService.execCommand(requestDto.getTerminalCommand());
-        return result;
+        //String result = autoService.execCommand(requestDto.getTerminalCommand());
+        return null;
     }
 
     // Java에서 teminal -> python 실행
@@ -62,8 +62,8 @@ public class AutoController {
     @ResponseBody
     public String python(@PathVariable String file) { // 추후에는 request에 명령어를 담아서 오자.
         String cmd = "python3 /Users/user/ncp/board/" + file;
-        String result = autoService.execCommand(cmd);
-        return result;
+        //String result = autoService.execCommand(cmd);
+        return null;
     }
 
     // 이미지 download test

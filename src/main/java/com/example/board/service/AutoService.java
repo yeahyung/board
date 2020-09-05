@@ -115,11 +115,15 @@ public class AutoService {
         // multipartFileList에 대해서 imgAug 실행
 
         // 이미지 Aug 실행
+        // test.py 실행 --> /Users/user/download/imgUpload 에 있는 image들에 대해서 augmentation 실행 & /Users/user/download/aug 폴더에 저장 & zip 파일 생성 후 aug 폴더 삭제
         LOG.warn("이미지 augmentation을 실행합니다.");
-        String cmd = "python3 /Users/yeahyungbin/board/src/main/resources/static/python/test.py";
+        String cmd = "bash /Users/user/ncp/board/src/main/resources/static/python/script.sh";
         String result = execCommand(cmd);
 
-        return fileDownload(response);
+        LOG.warn(result);
+
+        //return fileDownload(response);
+        return null;
     }
 
     // Java에서 cmd 명령어 실행
@@ -141,6 +145,7 @@ public class AutoService {
             return readBuffer.toString();
         }catch(Exception e){
             e.printStackTrace();
+            LOG.error("error");
             System.exit(1);
         }
         return null;
@@ -156,7 +161,7 @@ public class AutoService {
         ZipOutputStream zipOutputStream = new ZipOutputStream(bufferedOutputStream);
 
         ArrayList<File> files = new ArrayList<>(2);
-        files.add(new File("/Users/yeahyungbin/Downloads/myZipFile.zip"));
+        files.add(new File("/Users/user/Downloads/myZipFile.zip"));
 
         //packing files
         for (File file : files) {
