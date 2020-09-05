@@ -34,14 +34,15 @@ public class AutoController {
         return "/project/home.html";
     }
 
-    // 이미지 upload test
+    // 이미지 upload
+    // console -> 서버(로컬)로 이미지 upload
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     @ResponseBody
     public String fileUpload(MultipartHttpServletRequest request) {
         return autoService.fileUpload(request);
     }
 
-    // image augmentation 요청
+    // image augmentation 요청 & 결과 값 다운로드
     @RequestMapping(value = "/imgAug", method = RequestMethod.POST)
     @ResponseBody
     public byte[] imageAugmentation(MultipartHttpServletRequest request, HttpServletResponse response) throws IOException{

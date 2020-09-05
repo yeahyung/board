@@ -5,6 +5,7 @@ import com.example.board.controller.AutoController;
 import com.example.board.dto.TerminalRequestDto;
 import com.example.board.util.ServletRequestUtil;
 import com.example.board.util.UserUtils;
+import com.mysql.cj.x.protobuf.MysqlxDatatypes;
 import org.apache.tomcat.util.http.fileupload.ByteArrayOutputStream;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.slf4j.Logger;
@@ -34,6 +35,7 @@ public class AutoService {
     public String fileUpload(MultipartHttpServletRequest request){
         Iterator<String> itr = request.getFileNames();
 
+        // member 별로 downloadPath 수정, /imgUpload/memberNo 같이
         String downloadPath = "/Users/user/Downloads/imgUpload/";
         File downloadDir = new File(downloadPath);
         if(!downloadDir.exists())
@@ -59,7 +61,7 @@ public class AutoService {
     public String getFileList(){
         String s = System.getProperty("user.dir");
         String filePath = s + "/images";
-        String result = "";
+        StringBuilder result = new StringBuilder();
 
         File dir = new File(filePath);
 
@@ -71,9 +73,9 @@ public class AutoService {
 
         if(fileList.length > 0){
             for(File temp : fileList){
-                result += temp.getName() + "\n";
+                result.append(temp.getName() + "\n");
             }
-            return result;
+            return result.toString();
         }
 
         return "empty";
