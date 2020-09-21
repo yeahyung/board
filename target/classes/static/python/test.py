@@ -195,10 +195,10 @@ seq = iaa.Sequential(
     dtype=np.uint8
 )'''
 
-base_paths = "/Users/yeahyungbin/Downloads"
-img_paths = "/Users/yeahyungbin/Downloads/imgUpload"
+base_paths = "/Users/user/Downloads"
+img_paths = "/Users/user/Downloads/imgUpload"
 
-aug_paths = "/Users/yeahyungbin/Downloads/aug"
+aug_paths = "/Users/user/Downloads/aug"
 if not(os.path.isdir(aug_paths)):
     os.makedirs(aug_paths)
 
@@ -208,12 +208,12 @@ for item in file_list:
     extention = item.split(".")[-1]
     if extention == "jpeg" or extention == "jpg":
         img = cv2.imread(img_paths+"/"+item)
-        images = np.array([ img for _ in range(4)], dtype=np.uint8)
+        images = np.array([ img for _ in range(8)], dtype=np.uint8)
         images_aug = seq.augment_images(images)
         #print(images_aug.shape)
         for tt,img_path in enumerate(images_aug):
             #print(str(tt)+item, img_path.shape)
             #print("/Users/yeahyungbin/Downloads/aug/"+str(tt)+".jpg")
-            cv2.imwrite("/Users/yeahyungbin/Downloads/aug/"+str(tt) + item, img_path)
+            cv2.imwrite("/Users/user/Downloads/aug/"+str(tt) + item, img_path)
 
 zip(aug_paths, base_paths+"/myZipFile.zip")
