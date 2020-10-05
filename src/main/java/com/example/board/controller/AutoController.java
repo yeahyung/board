@@ -49,6 +49,13 @@ public class AutoController {
         return autoService.imgAug(request, response);
     }
 
+    // 이미지 download test
+    @RequestMapping(value = "/download", method = RequestMethod.GET)
+    @ResponseBody
+    public byte[] fileDownload(HttpServletResponse response) throws IOException {
+        return autoService.fileDownload(response);
+    }
+
     // Java에서 cmd 실행
     @PostMapping("/terminal")
     @ResponseBody
@@ -64,12 +71,5 @@ public class AutoController {
         String cmd = "python3 /Users/user/ncp/board/" + file;
         //String result = autoService.execCommand(cmd);
         return null;
-    }
-
-    // 이미지 download test
-    @RequestMapping(value = "/download", method = RequestMethod.GET)
-    @ResponseBody
-    public byte[] fileDownload(HttpServletResponse response) throws IOException {
-        return autoService.fileDownload(response);
     }
 }
