@@ -184,4 +184,38 @@ public class AutoService {
         IOUtils.closeQuietly(byteArrayOutputStream);
         return byteArrayOutputStream.toByteArray();
     }
+
+    public String trainImages(MultipartHttpServletRequest request) {
+
+        System.out.println(request);
+
+        Iterator<String> itr = request.getFileNames();
+
+        // 1번 - 관리 서버에서 training
+        // member 별로 downloadPath 수정, /trainImage/memberNo 같이
+        String downloadPath = "/Users/user/trainImage/";
+        File downloadDir = new File(downloadPath);
+        if(!downloadDir.exists())
+            downloadDir.mkdirs();
+
+        while(itr.hasNext()){
+            MultipartFile mpf = request.getFile(itr.next());
+            String originalFilename = mpf.getOriginalFilename();
+            LOG.warn(originalFilename);
+            try{
+                mpf.transferTo(new File(downloadPath + originalFilename));
+            }catch(Exception e){
+                LOG.warn(String.valueOf(e));
+                e.printStackTrace();
+            }
+        }
+
+
+        // 2번 - 고객 VM 에서 training
+        // 고객 VM 에서 train 하기 위해선 zip file 전송 필요 by sftp??
+
+
+
+        return "OK";
+    }
 }

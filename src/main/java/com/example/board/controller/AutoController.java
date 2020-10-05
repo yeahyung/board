@@ -56,6 +56,27 @@ public class AutoController {
         return autoService.fileDownload(response);
     }
 
+
+    /*
+    이미지 training
+    사용자는 자신의 train 폴더(images + labels), data.yaml 파일을 zip file로 압축하여 전달한다.
+    train - images - *.jpg
+    train - labels - *.txt
+    data.yaml
+
+    zip file을.. 그냥 전달하나?
+    zip file은 어떻게 전달? sftp?
+
+    전달해서 script 내에서 python code로 train.txt file 작성 및 valid 폴더 생성?
+    flask app을 띄워놓는 게 나은가?
+     */
+    @RequestMapping(value = "/train", method = RequestMethod.POST)
+    @ResponseBody
+    public String trainImages(MultipartHttpServletRequest request){
+        return autoService.trainImages(request);
+    }
+
+
     // Java에서 cmd 실행
     @PostMapping("/terminal")
     @ResponseBody

@@ -14,16 +14,17 @@ import org.springframework.stereotype.Service;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Properties;
 
 @Service
 public class ExecuteScriptService {
     private static final Logger log = LoggerFactory.getLogger(ExecuteScriptService.class);
 
-    @Value("10.41.167.51")
-    private String host;
+    private String host = "yolo";
 
-    public void executeRemoteCommand(){
+    public void executeRemoteCommand() {
         log.info("Execute remote command");
 
         JSch jsch =new JSch();
@@ -37,19 +38,21 @@ public class ExecuteScriptService {
             //jsch.addIdentity(privateKeyPath);
             session = jsch.getSession(user, host, port);
             session.setPassword(password);
-            //session.setConfig("PreferredAuthentications", "publickey,keyboard-interactive,password");
+            session.setConfig("PreferredAuthentications", "publickey,keyboard-interactive,password");
             Properties config = new Properties();
             config.put("StrictHostKeyChecking", "no");
             session.setConfig(config);
         } catch (JSchException var10) {
             log.error("Failed to create Jsch Session object. : " + var10.getMessage());
+        } catch(Exception e){
+            System.out.println("Invalid key");
         }
 
         try {
             session.connect();
             log.info("session connected");
             Channel channel = session.openChannel("exec");
-            ((ChannelExec)channel).setCommand("touch /root/zz.txt");
+            ((ChannelExec)channel).setCommand("touch /root/asd/zz.txt");
             ((ChannelExec)channel).setPty(false);
             channel.connect();
             BufferedReader stdInput = new BufferedReader(new InputStreamReader(channel.getInputStream()));
