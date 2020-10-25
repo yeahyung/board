@@ -2,10 +2,12 @@ package com.example.board.controller;
 
 import com.example.board.dto.TerminalRequestDto;
 import com.example.board.service.AutoService;
+import com.example.board.util.FileHandler;
 import com.example.board.vo.request.ImgAugRequestVo;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,6 +24,9 @@ public class AutoController {
 
     private AutoService autoService;
 
+    @Autowired
+    FileHandler fileHandler;
+
     // 이미지 upload 기본 html
     @RequestMapping("/test")
     public String test() {
@@ -31,7 +36,7 @@ public class AutoController {
         LOG.warn(result);
         */
 
-        return "/project/home.html";
+        return "home";
     }
 
     // 이미지 upload
@@ -92,5 +97,12 @@ public class AutoController {
         String cmd = "python3 /Users/user/ncp/board/" + file;
         //String result = autoService.execCommand(cmd);
         return null;
+    }
+
+    // script file get
+    @GetMapping("/get/{file}")
+    @ResponseBody
+    public String getFile(@PathVariable String file) { // 추후에는 request에 명령어를 담아서 오자.
+        return fileHandler.readResourceFileToString("static/python/" + file + ".sh");
     }
 }

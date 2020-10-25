@@ -208,7 +208,7 @@ for item in file_list:
     extention = item.split(".")[-1]
     if extention == "jpeg" or extention == "jpg":
         img = cv2.imread(img_paths+"/"+item)
-        images = np.array([ img for _ in range(8)], dtype=np.uint8)
+        images = np.array([ img for _ in range(30)], dtype=np.uint8)
         images_aug = seq.augment_images(images)
         #print(images_aug.shape)
         for tt,img_path in enumerate(images_aug):

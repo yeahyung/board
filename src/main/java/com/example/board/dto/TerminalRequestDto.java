@@ -1,6 +1,5 @@
 package com.example.board.dto;
 
-import com.sun.xml.internal.xsom.impl.Ref;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

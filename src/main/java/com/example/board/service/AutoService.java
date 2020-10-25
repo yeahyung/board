@@ -117,13 +117,12 @@ public class AutoService {
         // 이미지 Aug 실행
         // test.py 실행 --> /Users/user/download/imgUpload 에 있는 image들에 대해서 augmentation 실행 & /Users/user/download/aug 폴더에 저장 & zip 파일 생성 후 aug 폴더 삭제
         LOG.warn("이미지 augmentation을 실행합니다.");
-        String cmd = "bash /Users/user/ncp/board/src/main/resources/static/python/script.sh";
+        String cmd = "bash /Users/user/ncp/board/src/main/resources/static/python/script-local.sh";
         String result = execCommand(cmd);
 
         LOG.warn(result);
 
-        //return fileDownload(response);
-        return null;
+        return fileDownload(response);
     }
 
     // Java에서 cmd 명령어 실행
@@ -154,7 +153,7 @@ public class AutoService {
     public byte[] fileDownload(HttpServletResponse response) throws IOException{
         response.setContentType("application/zip");
         response.setStatus(HttpServletResponse.SC_OK);
-        response.addHeader("Content-Disposition", "attachment; filename=\"test.zip\"");
+        response.addHeader("Content-Disposition", "attachment; filename=\"augResult.zip\"");
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(byteArrayOutputStream);
@@ -162,6 +161,8 @@ public class AutoService {
 
         ArrayList<File> files = new ArrayList<>(2);
         files.add(new File("/Users/user/Downloads/myZipFile.zip"));
+
+        LOG.info("download myZipFile.zip");
 
         //packing files
         for (File file : files) {
@@ -212,7 +213,17 @@ public class AutoService {
 
 
         // 2번 - 고객 VM 에서 training
-        // 고객 VM 에서 train 하기 위해선 zip file 전송 필요 by sftp??
+        // 고객 VM 에서 train 하기 위해선 zip file 전송 필요 by sftp?? - 일단 local에서만 실행하자. pass
+        // /Users/user/trainImage/~~.zip file로 저장
+        // unzip file
+        // 일단 zip file 내에 images 폴더, labels 폴더, data.yaml 로 분리 / (jpg와 txt 파일 분리는 추후에)
+        // python으로?
+        /*이미지 training
+                train - images - *.jpg
+                train - labels - *.txt
+                        data.yaml
+                전달해서 script 내에서 python code로 train.txt file 작성 및 valid 폴더 생성?
+        */
 
 
 

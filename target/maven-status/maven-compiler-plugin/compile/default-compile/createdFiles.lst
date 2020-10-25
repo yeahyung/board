@@ -6,6 +6,7 @@ com/example/board/service/ExecuteScriptService.class
 com/example/board/repository/ImgAugHistoryRepository.class
 com/example/board/vo/request/ImgAugRequestVo.class
 com/example/board/util/MessageSourceUtil.class
+com/example/board/dto/TerminalRequestDto.class
 com/example/board/service/AutoHistoryService.class
 com/example/board/util/UserUtils.class
 com/example/board/dto/CommentDto$CommentDtoBuilder.class
@@ -16,6 +17,7 @@ com/example/board/interceptor/YeaInterceptor.class
 com/example/board/domain/repository/CommentRepository.class
 com/example/board/service/BoardService.class
 com/example/board/dto/BoardDto$BoardDtoBuilder.class
+com/example/board/dto/TerminalRequestDto$TerminalRequestDtoBuilder.class
 com/example/board/controller/AutoInternalController.class
 com/example/board/domain/entity/CommentEntity.class
 com/example/board/domain/entity/BoardEntity$BoardEntityBuilder.class
